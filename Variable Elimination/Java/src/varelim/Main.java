@@ -42,7 +42,7 @@ public class Main {
 		// Print the query and observed variables
 		ui.printQueryAndObserved();
 		
-		//PUT YOUR CALL TO THE VARIABLE ELIMINATION ALGORITHM HERE
+		//PUT YOUR CALL TO THE VARIABLE ELIMINATION ALGORITHM HERE:
 		
 	}
 }
