@@ -4,8 +4,10 @@
 Class for the implementation of the variable elimination algorithm.
 
 """
+from factor import Factor
+import logging
 
-class VariableElimination():
+class VariableElimination:
 
     def __init__(self, network):
         """
@@ -31,3 +33,27 @@ class VariableElimination():
                 for the query variable
 
         """
+        # remove observed and query variables from elim order if this wasnt already done
+        elim_order = [i for i in elim_order if i not in observed.keys()]
+        if query in elim_order: elim_order.remove(query)
+
+        # construct a list of factors, one for each node in the network
+        factors = [Factor(p) for p in self.network.probabilities.values()]
+        # reduce all factors that have evidence variables in them
+        factors = [f.reduce(observed) for f in factors]
+        factors = [f for f in factors if f.get_variables()]
+
+        # for each variable X in the elimination order:
+        for var in elim_order:
+            # gather all factors with var and remove them from the factors list
+            factors_with_var = [f for f in factors if f.contains(var)]
+            factors = [f for f in factors if f not in factors_with_var]
+            # multiply together and sum out var
+            factors.append(Factor.multiply_list(factors_with_var).marginalize(var))
+        final = Factor.multiply_list(factors).normalize()
+
+        return final.get_df()
+
+        # Log everything on the way!
+        # henry = logging.getLogger('Henry')
+        # henry.log()
