@@ -1,11 +1,12 @@
 import pandas as pd
-
+from typing import Optional
 
 class Factor:
-    __df = None
-
     def __init__(self, df: pd.DataFrame):
         self.__df = df
+
+    def __str__(self) -> str:
+        return self.__df.to_string()
 
     @staticmethod
     def multiply(f1: 'Factor', f2: 'Factor') -> 'Factor':
@@ -37,11 +38,13 @@ class Factor:
                 self.__df = self.__df[self.__df[k] == v].drop(columns=[k])
         return self
 
-    def marginalize(self, var: str) -> 'Factor':
+    def sum_out(self, var: str) -> Optional['Factor']:
         other_vars = self.get_variables()
         other_vars.remove(var)
-        self.__df = self.__df.groupby(other_vars, as_index=False)['prob'].sum()
-        return self
+        if other_vars:
+            self.__df = self.__df.groupby(other_vars, as_index=False)['prob'].sum()
+            return self
+        return None
 
     def normalize(self) -> 'Factor':
         sum_values = self.__df['prob'].sum()

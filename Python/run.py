@@ -8,10 +8,6 @@ Code to read in Bayesian Networks has been provided. We assume you have installe
 from read_bayesnet import BayesNet
 from variable_elim import VariableElimination
 
-import pandas as pd
-
-from factor import Factor
-
 if __name__ == '__main__':
     # The class BayesNet represents a Bayesian network from a .bif file in several variables
     net = BayesNet('earthquake.bif') # Format and other networks can be found on http://www.bnlearn.com/bnrepository/
@@ -33,7 +29,7 @@ if __name__ == '__main__':
     query = 'Burglary'
 
     # The evidence is represented in the following way (can also be empty when there is no evidence): 
-    evidence = {'Alarm': 'True'}
+    evidence = {'JohnCalls': 'True'}
 
     # Determine your elimination ordering before you call the run function. The elimination ordering   
     # is either specified by a list or a heuristic function that determines the elimination ordering

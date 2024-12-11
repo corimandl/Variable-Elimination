@@ -33,26 +33,27 @@ class VariableElimination:
                 for the query variable
 
         """
-        # remove observed and query variables from elim order if this wasnt already done
-        elim_order = [i for i in elim_order if i not in observed.keys()]
-        if query in elim_order: elim_order.remove(query)
+        # remove observed and query variables from elim
+        elim_order = [i for i in elim_order if i not in observed.keys() and i != query]
 
-        # construct a list of factors, one for each node in the network
-        factors = [Factor(p) for p in self.network.probabilities.values()]
-        # reduce all factors that have evidence variables in them
-        factors = [f.reduce(observed) for f in factors]
+        # construct a list of factors, one for each node in the network, reduce out the evidence variables
+        factors = [Factor(p).reduce(observed) for p in self.network.probabilities.values()]
+        # remove empty factor(s)
         factors = [f for f in factors if f.get_variables()]
 
-        # for each variable X in the elimination order:
         for var in elim_order:
             # gather all factors with var and remove them from the factors list
             factors_with_var = [f for f in factors if f.contains(var)]
             factors = [f for f in factors if f not in factors_with_var]
-            # multiply together and sum out var
-            factors.append(Factor.multiply_list(factors_with_var).marginalize(var))
-        final = Factor.multiply_list(factors).normalize()
+            # multiply factors_with_var together and then sum out var
+            f = Factor.multiply_list(factors_with_var).sum_out(var)
+            if f: factors.append(f)
 
-        return final.get_df()
+        # multiply final factors, which just have the query variable, and normalize.
+        final = Factor.multiply_list(factors)
+        final.normalize()
+
+        return final
 
         # Log everything on the way!
         # henry = logging.getLogger('Henry')
