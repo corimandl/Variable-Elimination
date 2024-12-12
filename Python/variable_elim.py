@@ -5,20 +5,23 @@ Class for the implementation of the variable elimination algorithm.
 
 """
 from factor import Factor
-import logging
 
 class VariableElimination:
 
-    def __init__(self, network):
+    def __init__(self, network, logger):
         """
         Initialize the variable elimination algorithm with the specified network.
         Add more initializations if necessary.
 
         """
         self.network = network
+        self.factors = [Factor(p) for p in network.probabilities.values()]
+        self.logger = logger
+        self.logger.info("Initial factor list inferred from the network structure "
+                         "and its conditional probability tables:\n"
+                         f"{'\n*****\n'.join(map(str, self.factors))}")
 
-
-    def run(self, query, observed, elim_order):
+    def run(self, query: str, observed: dict, elim_order: list) -> 'Factor':
         """
         Use the variable elimination algorithm to find out the probability
         distribution of the query variable given the observed variables
@@ -36,31 +39,45 @@ class VariableElimination:
         """
         # remove observed and query variables from elim order
         elim_order = [i for i in elim_order if i not in observed.keys() and i != query]
-        # TODO: Log elim order
-        # construct a list of factors, one for each node in the network, reduce out the evidence variables
-        factors = [Factor(p).reduce(observed) for p in self.network.probabilities.values()]
-        # remove empty factor(s)
+        self.logger.info("RUNNING THE VARIABLE ELIMINATION ALGORITHM\n"
+                         f"The query variable is: {query}\n"
+                         f"The observed variables are: {observed}\n"
+                         "The variable elimination order of the remaining variables (given by heuristic) is: "
+                         f"{'->'.join(elim_order)}\n"
+                         "We reduce out the observed variables and start to loop over the variables to be eliminated:")
+
+        # reduce out observed variables
+        factors = [f.reduce(observed) for f in self.factors]
+        # remove empty factor(s) which might occur if there was one with only observed variables
         factors = [f for f in factors if f.get_variables()]
-        # TODO: log initial factor lost
 
         for var in elim_order:
-            # TODO: log which variable we're eliminating next
-            # gather all factors with var and remove them from the factors list
+            self.logger.info("The remaining factors:\n"
+                             f"{'\n*****\n'.join(map(str, factors))}\n\n"
+                             f"The next variable to be eliminated: {var}")
+
             factors_with_var = [f for f in factors if f.contains(var)]
-            # TODO: log collection of all factors
             factors = [f for f in factors if f not in factors_with_var]
+            self.logger.info(f"Gather all the factors that contain {var}:\n"
+                             f"{'\n\n'.join(map(str, factors_with_var))}")
+
             # multiply factors_with_var together and then sum out var
             # Some factors might disappear, in which case we don't add them back to the factors list.
             f = Factor.multiply_list(factors_with_var)
-            # TODO: log multiplication of the factors (result)
+            self.logger.info(f"Multiply them together and get as result:\n{f}")
             f = f.sum_out(var)
-            # TODO: log the marginalization
+            self.logger.info(f"Sum out {var} from the remaining factor and get:\n{f}\n"
+                             "add this factor back to the list.")
             if f: factors.append(f)
 
-        # multiply final factors, which only have the query variable, and normalize.
+        self.logger.info("All variables except the query have been eliminated. The remaining factors:\n"
+                         f"{'\n*****\n'.join(map(str, factors))}")
         final = Factor.multiply_list(factors)
-        # TODO: log final multiplication
-        final.normalize()
-        # TODO: log normalization and final result
+        self.logger.info(f"Multiply them:\n{final}")
+        final = final.normalize()
+        self.logger.info("Lastly, normalize the final factor, "
+                         "resulting in a probability distribution of the query variable.\n"
+                         f"given {observed}:\n"
+                         f"{final}")
 
         return final

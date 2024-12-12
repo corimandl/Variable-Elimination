@@ -7,34 +7,38 @@ Code to read in Bayesian Networks has been provided. We assume you have installe
 """
 from read_bayesnet import BayesNet
 from variable_elim import VariableElimination
+import logging
 
 if __name__ == '__main__':
+    # Our logger is called henry
+    logging.basicConfig(level=logging.INFO, filename='results.txt', filemode='w',
+                        format='@ %(asctime)s - from %(name)s:\n%(message)s\n'
+                               '--------------------------------------------------')
+    henry = logging.getLogger("Henry the logger")
+
     # The class BayesNet represents a Bayesian network from a .bif file in several variables
-    net = BayesNet('survey.bif') # Format and other networks can be found on http://www.bnlearn.com/bnrepository/
-    # These are the variables read from the network that should be used for variable elimination
+    net = BayesNet('earthquake.bif') # Format and other networks can be found on http://www.bnlearn.com/bnrepository/
 
-    ve = VariableElimination(net)
-    query = 'O'
-    evidence = {'S': 'M', 'E': 'uni', 'T': 'car'}
+    ve = VariableElimination(net, henry)
+    query = 'Earthquake'
+    evidence = {'Alarm': 'True'}
 
-    """heuristic:"""
-    heuristic = 'ttt'
-    if heuristic == 'lia': # least incoming arcs
+    heuristic = 'fff' # 'lia' for least incoming arcs, 'fff' for fewest factors first, anything else for no heuristic
+    if heuristic == 'lia': # least incoming arcs => sort by amount of parents
         nodes = {node: len(net.parents[node]) for node in net.nodes}
         elim_order = sorted(net.nodes, key= lambda node: nodes[node])
-    elif heuristic == 'fff': # fewest factors first
+    elif heuristic == 'fff': # fewest factors first => sort by amount of factors, which is the same as children + 1
         nodes = {}
         for node in net.nodes:
             # each node has its own factor:
             factors = 1
-            # for every set of parents, if the node is in there, it is also in this nodes factor
+            # for every set of parents, if the node is in there, it is also in this child's factor
             for parents in net.parents.values():
                 if node in parents: factors += 1
             nodes[node] = factors
         elim_order = sorted(nodes, key= lambda node: nodes[node])
     else:
+        # No heuristic
         elim_order = net.nodes
 
-    # Call the variable elimination function for the queried node given the evidence and the elimination ordering as follows:   
-    print(ve.run(query, evidence, elim_order))
-    # assign data
+    ve.run(query, evidence, elim_order)
