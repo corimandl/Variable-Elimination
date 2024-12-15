@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
     ve = VariableElimination(net, henry)
     query = 'Earthquake'
-    evidence = {'Alarm': 'True'}
+    evidence = {'Burglary': 'True'}
 
     heuristic = 'fff' # 'lia' for least incoming arcs, 'fff' for fewest factors first, anything else for no heuristic
     if heuristic == 'lia': # least incoming arcs => sort by amount of parents
@@ -31,11 +31,11 @@ if __name__ == '__main__':
         nodes = {}
         for node in net.nodes:
             # each node has its own factor:
-            factors = 1
+            num_factors = 1
             # for every set of parents, if the node is in there, it is also in this child's factor
             for parents in net.parents.values():
-                if node in parents: factors += 1
-            nodes[node] = factors
+                if node in parents: num_factors += 1
+            nodes[node] = num_factors
         elim_order = sorted(nodes, key= lambda node: nodes[node])
     else:
         # No heuristic

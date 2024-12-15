@@ -1,4 +1,4 @@
-@ 2024-12-12 15:41:02,148 - from Henry the logger:
+@ 2024-12-15 17:44:51,416 - from Henry the logger:
 Initial factor list inferred from the network structure and its conditional probability tables:
   Burglary  prob
 0     True  0.01
@@ -30,160 +30,182 @@ Initial factor list inferred from the network structure and its conditional prob
 2      True  False  0.01
 3     False  False  0.99
 --------------------------------------------------
-@ 2024-12-12 15:41:02,149 - from Henry the logger:
+@ 2024-12-15 17:44:51,416 - from Henry the logger:
 RUNNING THE VARIABLE ELIMINATION ALGORITHM
 The query variable is: Earthquake
-The observed variables are: {'Alarm': 'True'}
-The variable elimination order of the remaining variables (given by heuristic) is: JohnCalls->MaryCalls->Burglary
+The observed variables are: {'Burglary': 'True'}
+The variable elimination order of the remaining variables (given by heuristic) is: JohnCalls->MaryCalls->Alarm
 We reduce out the observed variables and start to loop over the variables to be eliminated:
 --------------------------------------------------
-@ 2024-12-12 15:41:02,158 - from Henry the logger:
+@ 2024-12-15 17:44:51,423 - from Henry the logger:
 The remaining factors:
-  Burglary  prob
-0     True  0.01
-1    False  0.99
-*****
   Earthquake  prob
 0       True  0.02
 1      False  0.98
 *****
-  Burglary Earthquake   prob
-0     True       True  0.950
-2    False       True  0.290
-4     True      False  0.940
-6    False      False  0.001
+   Alarm Earthquake  prob
+0   True       True  0.95
+1  False       True  0.05
+4   True      False  0.94
+5  False      False  0.06
 *****
-  JohnCalls  prob
-0      True   0.9
-1     False   0.1
+  JohnCalls  Alarm  prob
+0      True   True  0.90
+1     False   True  0.10
+2      True  False  0.05
+3     False  False  0.95
 *****
-  MaryCalls  prob
-0      True   0.7
-1     False   0.3
+  MaryCalls  Alarm  prob
+0      True   True  0.70
+1     False   True  0.30
+2      True  False  0.01
+3     False  False  0.99
 
 The next variable to be eliminated: JohnCalls
 --------------------------------------------------
-@ 2024-12-12 15:41:02,159 - from Henry the logger:
+@ 2024-12-15 17:44:51,425 - from Henry the logger:
 Gather all the factors that contain JohnCalls:
-  JohnCalls  prob
-0      True   0.9
-1     False   0.1
+  JohnCalls  Alarm  prob
+0      True   True  0.90
+1     False   True  0.10
+2      True  False  0.05
+3     False  False  0.95
 --------------------------------------------------
-@ 2024-12-12 15:41:02,160 - from Henry the logger:
+@ 2024-12-15 17:44:51,426 - from Henry the logger:
 Multiply them together and get as result:
-  JohnCalls  prob
-0      True   0.9
-1     False   0.1
+  JohnCalls  Alarm  prob
+0      True   True  0.90
+1     False   True  0.10
+2      True  False  0.05
+3     False  False  0.95
 --------------------------------------------------
-@ 2024-12-12 15:41:02,160 - from Henry the logger:
+@ 2024-12-15 17:44:51,427 - from Henry the logger:
 Sum out JohnCalls from the remaining factor and get:
-None
+   Alarm  prob
+0  False   1.0
+1   True   1.0
 add this factor back to the list.
 --------------------------------------------------
-@ 2024-12-12 15:41:02,164 - from Henry the logger:
+@ 2024-12-15 17:44:51,433 - from Henry the logger:
 The remaining factors:
-  Burglary  prob
-0     True  0.01
-1    False  0.99
-*****
   Earthquake  prob
 0       True  0.02
 1      False  0.98
 *****
-  Burglary Earthquake   prob
-0     True       True  0.950
-2    False       True  0.290
-4     True      False  0.940
-6    False      False  0.001
+   Alarm Earthquake  prob
+0   True       True  0.95
+1  False       True  0.05
+4   True      False  0.94
+5  False      False  0.06
 *****
-  MaryCalls  prob
-0      True   0.7
-1     False   0.3
+  MaryCalls  Alarm  prob
+0      True   True  0.70
+1     False   True  0.30
+2      True  False  0.01
+3     False  False  0.99
+*****
+   Alarm  prob
+0  False   1.0
+1   True   1.0
 
 The next variable to be eliminated: MaryCalls
 --------------------------------------------------
-@ 2024-12-12 15:41:02,165 - from Henry the logger:
+@ 2024-12-15 17:44:51,434 - from Henry the logger:
 Gather all the factors that contain MaryCalls:
-  MaryCalls  prob
-0      True   0.7
-1     False   0.3
+  MaryCalls  Alarm  prob
+0      True   True  0.70
+1     False   True  0.30
+2      True  False  0.01
+3     False  False  0.99
 --------------------------------------------------
-@ 2024-12-12 15:41:02,166 - from Henry the logger:
+@ 2024-12-15 17:44:51,435 - from Henry the logger:
 Multiply them together and get as result:
-  MaryCalls  prob
-0      True   0.7
-1     False   0.3
+  MaryCalls  Alarm  prob
+0      True   True  0.70
+1     False   True  0.30
+2      True  False  0.01
+3     False  False  0.99
 --------------------------------------------------
-@ 2024-12-12 15:41:02,166 - from Henry the logger:
+@ 2024-12-15 17:44:51,437 - from Henry the logger:
 Sum out MaryCalls from the remaining factor and get:
-None
+   Alarm  prob
+0  False   1.0
+1   True   1.0
 add this factor back to the list.
 --------------------------------------------------
-@ 2024-12-12 15:41:02,169 - from Henry the logger:
+@ 2024-12-15 17:44:51,441 - from Henry the logger:
 The remaining factors:
-  Burglary  prob
-0     True  0.01
-1    False  0.99
-*****
   Earthquake  prob
 0       True  0.02
 1      False  0.98
 *****
-  Burglary Earthquake   prob
-0     True       True  0.950
-2    False       True  0.290
-4     True      False  0.940
-6    False      False  0.001
+   Alarm Earthquake  prob
+0   True       True  0.95
+1  False       True  0.05
+4   True      False  0.94
+5  False      False  0.06
+*****
+   Alarm  prob
+0  False   1.0
+1   True   1.0
+*****
+   Alarm  prob
+0  False   1.0
+1   True   1.0
 
-The next variable to be eliminated: Burglary
+The next variable to be eliminated: Alarm
 --------------------------------------------------
-@ 2024-12-12 15:41:02,171 - from Henry the logger:
-Gather all the factors that contain Burglary:
-  Burglary  prob
-0     True  0.01
-1    False  0.99
+@ 2024-12-15 17:44:51,444 - from Henry the logger:
+Gather all the factors that contain Alarm:
+   Alarm Earthquake  prob
+0   True       True  0.95
+1  False       True  0.05
+4   True      False  0.94
+5  False      False  0.06
 
-  Burglary Earthquake   prob
-0     True       True  0.950
-2    False       True  0.290
-4     True      False  0.940
-6    False      False  0.001
+   Alarm  prob
+0  False   1.0
+1   True   1.0
+
+   Alarm  prob
+0  False   1.0
+1   True   1.0
 --------------------------------------------------
-@ 2024-12-12 15:41:02,175 - from Henry the logger:
+@ 2024-12-15 17:44:51,450 - from Henry the logger:
 Multiply them together and get as result:
-  Burglary Earthquake     prob
-0     True       True  0.00950
-1    False       True  0.28710
-2     True      False  0.00940
-3    False      False  0.00099
+   Alarm Earthquake  prob
+0  False       True  0.05
+1  False      False  0.06
+2   True       True  0.95
+3   True      False  0.94
 --------------------------------------------------
-@ 2024-12-12 15:41:02,177 - from Henry the logger:
-Sum out Burglary from the remaining factor and get:
-  Earthquake     prob
-0      False  0.01039
-1       True  0.29660
+@ 2024-12-15 17:44:51,452 - from Henry the logger:
+Sum out Alarm from the remaining factor and get:
+  Earthquake  prob
+0      False   1.0
+1       True   1.0
 add this factor back to the list.
 --------------------------------------------------
-@ 2024-12-12 15:41:02,180 - from Henry the logger:
+@ 2024-12-15 17:44:51,454 - from Henry the logger:
 All variables except the query have been eliminated. The remaining factors:
   Earthquake  prob
 0       True  0.02
 1      False  0.98
 *****
-  Earthquake     prob
-0      False  0.01039
-1       True  0.29660
+  Earthquake  prob
+0      False   1.0
+1       True   1.0
 --------------------------------------------------
-@ 2024-12-12 15:41:02,184 - from Henry the logger:
+@ 2024-12-15 17:44:51,457 - from Henry the logger:
 Multiply them:
-  Earthquake      prob
-0      False  0.010182
-1       True  0.005932
+  Earthquake  prob
+0      False  0.98
+1       True  0.02
 --------------------------------------------------
-@ 2024-12-12 15:41:02,187 - from Henry the logger:
+@ 2024-12-15 17:44:51,459 - from Henry the logger:
 Lastly, normalize the final factor, resulting in a probability distribution of the query variable.
-given {'Alarm': 'True'}:
-  Earthquake      prob
-0      False  0.631877
-1       True  0.368123
+given {'Burglary': 'True'}:
+  Earthquake  prob
+0      False  0.98
+1       True  0.02
 --------------------------------------------------

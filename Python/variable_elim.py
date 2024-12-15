@@ -1,5 +1,5 @@
 """
-@Author: Joris van Vugt, Moira Berens, Leonieke van den Bulk
+@Author: Joris van Vugt, Moira Berens, Leonieke van den Bulk, Cori Mandl, Linor legene
 
 Class for the implementation of the variable elimination algorithm.
 
@@ -11,8 +11,10 @@ class VariableElimination:
     def __init__(self, network, logger):
         """
         Initialize the variable elimination algorithm with the specified network.
-        Add more initializations if necessary.
+        initialize a basic list of factors, which is simply the network probability tables turned into factor objects.
 
+        @param network: a BayesNet object
+        @param logger: a logging.Logger object
         """
         self.network = network
         self.factors = [Factor(p) for p in network.probabilities.values()]
@@ -20,22 +22,21 @@ class VariableElimination:
         self.logger.info("Initial factor list inferred from the network structure "
                          "and its conditional probability tables:\n"
                          f"{'\n*****\n'.join(map(str, self.factors))}")
+        self.complexity = 0
 
     def run(self, query: str, observed: dict, elim_order: list) -> 'Factor':
         """
         Use the variable elimination algorithm to find out the probability
         distribution of the query variable given the observed variables
 
-        Input:
-            query:      The query variable
-            observed:   A dictionary of the observed variables {variable: value}
-            elim_order: Either a list specifying the elimination ordering
+        @param query:      The query variable
+        @param observed:   A dictionary of the observed variables {variable: value}
+        @param elim_order: Either a list specifying the elimination ordering
                         or a function that will determine an elimination ordering
                         given the network during the run
 
-        Output: A variable holding the probability distribution
-                for the query variable
-
+        @return: A variable holding the probability distribution
+                for the query variable given the evidence
         """
         # remove observed and query variables from elim order
         elim_order = [i for i in elim_order if i not in observed.keys() and i != query]
