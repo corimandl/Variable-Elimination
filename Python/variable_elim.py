@@ -65,6 +65,9 @@ class VariableElimination:
             # multiply factors_with_var together and then sum out var
             # Some factors might disappear, in which case we don't add them back to the factors list.
             f = Factor.multiply_list(factors_with_var)
+            #
+            self.complexity = max(f.get_num_variables(),self.complexity)
+
             self.logger.info(f"Multiply them together and get as result:\n{f}")
             f = f.sum_out(var)
             self.logger.info(f"Sum out {var} from the remaining factor and get:\n{f}\n"
@@ -80,5 +83,5 @@ class VariableElimination:
                          "resulting in a probability distribution of the query variable.\n"
                          f"given {observed}:\n"
                          f"{final}")
-
+        self.logger.info(f"The complexity is: {self.complexity}")
         return final
