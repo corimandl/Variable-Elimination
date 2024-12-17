@@ -17,11 +17,11 @@ if __name__ == '__main__':
     henry = logging.getLogger("Henry the logger")
 
     # The class BayesNet represents a Bayesian network from a .bif file in several variables
-    net = BayesNet('child.bif') # Format and other networks can be found on http://www.bnlearn.com/bnrepository/
+    net = BayesNet('survey.bif') # Format and other networks can be found on http://www.bnlearn.com/bnrepository/
 
     ve = VariableElimination(net, henry)
-    query = 'Age'
-    evidence = {'LowerBodyO2': '5-12'}
+    query = 'T'
+    evidence = {'O': 'emp', 'E': 'uni'}
 
     heuristic = '' # 'lia' for least incoming arcs, 'fff' for fewest factors first, anything else for no heuristic
     if heuristic == 'lia': # least incoming arcs => sort by amount of parents
