@@ -80,3 +80,8 @@ class Factor:
         sum_values = self.__df['prob'].sum()
         self.__df['prob'] = self.__df['prob'] / sum_values
         return self
+
+    def get_num_variables(self):
+        return len(self.__df.columns)
+
+    
