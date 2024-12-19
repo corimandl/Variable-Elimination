@@ -65,7 +65,8 @@ class VariableElimination:
             # multiply factors_with_var together and then sum out var
             # Some factors might disappear, in which case we don't add them back to the factors list.
             f = Factor.multiply_list(factors_with_var)
-            #
+
+            # keep track of the complexity, f has the possibility of being the new largest factor.
             self.complexity = max(f.get_num_variables(),self.complexity)
 
             self.logger.info(f"Multiply them together and get as result:\n{f}")
