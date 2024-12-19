@@ -82,5 +82,4 @@ class Factor:
         return self
 
     def get_num_variables(self):
-        return len(self.__df.columns)
-
+        return len(self.__df.columns) - 1

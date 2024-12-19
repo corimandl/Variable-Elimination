@@ -1,0 +1,17 @@
+BN_name,BN_nodes,BN_arcs,lia,fff,no_heuristic
+Survey,6,6,4,4,4
+Survey,6,6,5,4,4
+Survey,6,6,4,4,4
+Survey,6,6,3,3,3
+Asia,8,8,4,4,5
+Asia,8,8,4,5,4
+Asia,8,8,4,4,5
+Asia,8,8,4,4,4
+Child,20,25,9,4,8
+Child,20,25,9,4,8
+Child,20,25,8,5,8
+Child,20,25,9,5,9
+Alarm,37,46,8,8,8
+Alarm,37,46,9,8,10
+Alarm,37,46,9,7,9
+Alarm,37,46,9,8,10
