@@ -3,6 +3,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 results = pd.read_csv('testingResults.csv')
+
+results['lia'] = results['lia'] - 1
+results['fff'] = results['fff'] - 1
+results['no_heuristic'] = results['no_heuristic'] - 1
+
+
 results_long = results.melt(id_vars=['BN_name'],
                             value_vars=['lia', 'fff', 'no_heuristic'],
                             var_name='Heuristic',

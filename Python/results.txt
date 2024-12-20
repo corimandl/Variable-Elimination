@@ -1,4 +1,4 @@
-@ 2024-12-20 00:08:31,229 - from Henry the logger:
+@ 2024-12-20 00:28:17,850 - from Henry the logger:
 Initial factor list inferred from the network structure and its conditional probability tables:
   Burglary  prob
 0     True  0.01
@@ -30,14 +30,14 @@ Initial factor list inferred from the network structure and its conditional prob
 2      True  False  0.01
 3     False  False  0.99
 --------------------------------------------------
-@ 2024-12-20 00:08:31,230 - from Henry the logger:
+@ 2024-12-20 00:28:17,850 - from Henry the logger:
 RUNNING THE VARIABLE ELIMINATION ALGORITHM
 The query variable is: Burglary
 The observed variables are: {'JohnCalls': 'True', 'Earthquake': 'False'}
 The variable elimination order of the remaining variables (given by heuristic) is: MaryCalls->Alarm
 We reduce out the observed variables and start to loop over the variables to be eliminated:
 --------------------------------------------------
-@ 2024-12-20 00:08:31,236 - from Henry the logger:
+@ 2024-12-20 00:28:17,856 - from Henry the logger:
 The remaining factors:
   Burglary  prob
 0     True  0.01
@@ -61,7 +61,7 @@ The remaining factors:
 
 The next variable to be eliminated: MaryCalls
 --------------------------------------------------
-@ 2024-12-20 00:08:31,237 - from Henry the logger:
+@ 2024-12-20 00:28:17,857 - from Henry the logger:
 Gather all the factors that contain MaryCalls:
   MaryCalls  Alarm  prob
 0      True   True  0.70
@@ -69,7 +69,7 @@ Gather all the factors that contain MaryCalls:
 2      True  False  0.01
 3     False  False  0.99
 --------------------------------------------------
-@ 2024-12-20 00:08:31,238 - from Henry the logger:
+@ 2024-12-20 00:28:17,858 - from Henry the logger:
 Multiply them together and get as result:
   MaryCalls  Alarm  prob
 0      True   True  0.70
@@ -77,14 +77,14 @@ Multiply them together and get as result:
 2      True  False  0.01
 3     False  False  0.99
 --------------------------------------------------
-@ 2024-12-20 00:08:31,241 - from Henry the logger:
+@ 2024-12-20 00:28:17,860 - from Henry the logger:
 Sum out MaryCalls from the remaining factor and get:
    Alarm  prob
 0  False   1.0
 1   True   1.0
 add this factor back to the list.
 --------------------------------------------------
-@ 2024-12-20 00:08:31,244 - from Henry the logger:
+@ 2024-12-20 00:28:17,863 - from Henry the logger:
 The remaining factors:
   Burglary  prob
 0     True  0.01
@@ -106,7 +106,7 @@ The remaining factors:
 
 The next variable to be eliminated: Alarm
 --------------------------------------------------
-@ 2024-12-20 00:08:31,246 - from Henry the logger:
+@ 2024-12-20 00:28:17,866 - from Henry the logger:
 Gather all the factors that contain Alarm:
    Alarm Burglary   prob
 4   True     True  0.940
@@ -122,7 +122,7 @@ Gather all the factors that contain Alarm:
 0  False   1.0
 1   True   1.0
 --------------------------------------------------
-@ 2024-12-20 00:08:31,252 - from Henry the logger:
+@ 2024-12-20 00:28:17,871 - from Henry the logger:
 Multiply them together and get as result:
    Alarm Burglary     prob
 0  False     True  0.00300
@@ -130,14 +130,14 @@ Multiply them together and get as result:
 2   True     True  0.84600
 3   True    False  0.00090
 --------------------------------------------------
-@ 2024-12-20 00:08:31,254 - from Henry the logger:
+@ 2024-12-20 00:28:17,873 - from Henry the logger:
 Sum out Alarm from the remaining factor and get:
   Burglary     prob
 0    False  0.05085
 1     True  0.84900
 add this factor back to the list.
 --------------------------------------------------
-@ 2024-12-20 00:08:31,255 - from Henry the logger:
+@ 2024-12-20 00:28:17,875 - from Henry the logger:
 All variables except the query have been eliminated. The remaining factors:
   Burglary  prob
 0     True  0.01
@@ -147,19 +147,19 @@ All variables except the query have been eliminated. The remaining factors:
 0    False  0.05085
 1     True  0.84900
 --------------------------------------------------
-@ 2024-12-20 00:08:31,258 - from Henry the logger:
+@ 2024-12-20 00:28:17,878 - from Henry the logger:
 Multiply them:
   Burglary      prob
 0    False  0.050341
 1     True  0.008490
 --------------------------------------------------
-@ 2024-12-20 00:08:31,259 - from Henry the logger:
+@ 2024-12-20 00:28:17,879 - from Henry the logger:
 Lastly, normalize the final factor, resulting in a probability distribution of the query variable.
 given {'JohnCalls': 'True', 'Earthquake': 'False'}:
   Burglary     prob
 0    False  0.85569
 1     True  0.14431
 --------------------------------------------------
-@ 2024-12-20 00:08:31,259 - from Henry the logger:
+@ 2024-12-20 00:28:17,879 - from Henry the logger:
 The complexity is: 2
 --------------------------------------------------
